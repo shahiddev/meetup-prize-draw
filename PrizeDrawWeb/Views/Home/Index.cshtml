@@ -11,11 +11,15 @@
     </div>
     <div class="col-md-12">
         <h2>Usage</h2>
-        <p>Find an event on meetup, e.g. <a href="https://www.meetup.com/dotnetoxford/events/249057796/">https://www.meetup.com/dotnetoxford/events/249057796/</a></p>
-        @{ 
-            var exampleUrl = GetFullUrl("/prize-draws/dotnetoxford/events/249057796/");
-        }
-        <p>Take the URL path (i.e. "/dotnetoxford/events/249057796/") and use that path on this site as: <a href="@exampleUrl">@exampleUrl</a></p>
+        <p>Find an event on meetup, e.g. <a href="https://www.meetup.com/dotnetoxford/events/249057796/">https://www.meetup.com/dotnetoxford/events/249057796/</a> then enter the url in the textbox below.</p>
+        <p>Notes:</p>
+        <p>Press space to start the draw (you can do multiple draws - anyone who has already won is excluded from subsequent draws</p>
+        <p>Winners are logged in the dev tools console</p>
+    </div>
+    <div class="col-md-12">
+        <form asp-action="Index">
+            Enter meetup event URL: <input type="text" size="80" autofocus name="meetupUrl" /><input type="submit" value="Go" />
+        </form>
     </div>
 </div>
 

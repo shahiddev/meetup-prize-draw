@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PrizeDrawWeb.Models;
@@ -14,11 +15,28 @@ namespace PrizeDrawWeb.Controllers
 {
     public class HomeController : Controller
     {
+        [HttpGet]
         public IActionResult Index()
         {
             return View();
         }
-        [HttpGet("prize-draws/{groupId}/events/{eventId}")]
+        public IActionResult Index(string meetupUrl)
+        {
+
+            var match = Regex.Match(meetupUrl, "https://www.meetup.com/(?<group>\\w*)/events/(?<event>\\d*)/?");
+            if (match.Success)
+            {
+                var groupId = match.Groups["group"].Value;
+                var eventId = match.Groups["event"].Value;
+                return RedirectToRoute("PrizeDraw", new { groupId, eventId });
+            }
+            else
+            {
+                TempData["Message"] = "Couldn't parse URL :-(";
+                return View();
+            }
+        }
+        [HttpGet("prize-draws/{groupId}/events/{eventId}", Name ="PrizeDraw")]
         public async Task<IActionResult> Event([FromServices] MeetupService meetup, string groupId, int eventId)
         {
             var colours = new[]
