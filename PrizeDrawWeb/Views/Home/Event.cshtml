@@ -2,7 +2,8 @@
 @{
     ViewData["Title"] = "Event!";
     Layout = null;
-    var animationDurationMs = 1000;
+    var animationDurationMs = 750;
+    var iterationCount = 10;
 }
 <!DOCTYPE html>
 <html>
@@ -26,7 +27,6 @@
             font-family: 'Courier New', Courier, monospace;
             font-weight: bold;
             font-size: 2em;
-            text-align: center;
         }
         .row {
             height: @Model.RowHeight%;
@@ -40,6 +40,7 @@
             margin: 0;
             padding: 0;
             position: relative;
+            text-align: center;
         }
         .cell.selected {
             z-index: 99999;
@@ -133,7 +134,7 @@
         var lastCell = null;
         function Animate() {
             var sleep = @animationDurationMs; // this should match the CSS animation duration :-)
-            var iterationCount = 5;
+            var iterationCount = @iterationCount;
             var lastIndex = -1;
             if (lastCell !== null){
                 // clean up UI after last run!
