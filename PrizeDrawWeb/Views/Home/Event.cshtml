@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Event!";
     Layout = null;
+    var animationDurationMs = 1000;
 }
 <!DOCTYPE html>
 <html>
@@ -44,7 +45,7 @@
             z-index: 99999;
             overflow: visible;
             animation-name: stretch;
-            animation-duration: 1.5s;
+            animation-duration: @(animationDurationMs)ms;
             animation-timing-function: ease-out;
             animation-delay: 0;
             animation-direction: alternate;
@@ -131,7 +132,7 @@
         var cells = document.getElementsByClassName("cell");
         var lastCell = null;
         function Animate() {
-            var sleep = 1500; // this should match the CSS animation duration :-)
+            var sleep = @animationDurationMs; // this should match the CSS animation duration :-)
             var iterationCount = 5;
             var lastIndex = -1;
             if (lastCell !== null){
