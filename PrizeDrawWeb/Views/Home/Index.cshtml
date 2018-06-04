@@ -12,6 +12,17 @@
     <div class="col-md-12">
         <h2>Usage</h2>
         <p>Find an event on meetup, e.g. <a href="https://www.meetup.com/dotnetoxford/events/249057796/">https://www.meetup.com/dotnetoxford/events/249057796/</a></p>
-        <p>Take the URL path (i.e. "/dotnetoxford/events/249057796/") and use that path on this site: @this.Url.Content("/dotnetoxford/events/249057796/")</p>
+        @{ 
+            var exampleUrl = GetFullUrl("/prize-draws/dotnetoxford/events/249057796/");
+        }
+        <p>Take the URL path (i.e. "/dotnetoxford/events/249057796/") and use that path on this site as: <a href="@exampleUrl">@exampleUrl</a></p>
     </div>
 </div>
+
+@functions {
+    string GetFullUrl(string path)
+    {
+        var request = this.ViewContext.HttpContext.Request;
+        return $"{request.Scheme}://{request.Host}{path}";
+    }
+}
