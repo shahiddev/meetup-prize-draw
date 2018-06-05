@@ -135,19 +135,14 @@
         }
         function postWinnerToSlack(winnerDetails) {
             @if(!string.IsNullOrWhiteSpace(Configuration["PrizeDrawWeb_SlackApiUri"]))
-            {
-                <text>
+            {<text>
                 var url = "@Configuration["PrizeDrawWeb_SlackApiUri"]";
                 var text = `${new Date()}: ${winnerDetails}`;
-
-                $.ajax({
-                    data: 'payload=' + JSON.stringify({ "text": text }),
-                    dataType: 'json',
-                    processData: false,
-                    type: 'POST',
-                    url: url
-                });
-                </text>
+                fetch(url, {
+                    method: "POST",
+                    body: JSON.stringify({ "text": text })
+                })
+</text>
             }
         }
         var cells = document.getElementsByClassName("cell");
@@ -203,8 +198,6 @@
             }
         }
     </script>
-
-    <script src="~/lib/jquery/dist/jquery.js"></script>
 </body>
 
 </html>
