@@ -206,6 +206,14 @@
                 iterationCount--;
                 if (iterationCount >= 0) {
                     var cellIndex = Math.floor(Math.random() * cells.length);
+                    if (iterationCount == 0){
+                        for (let i = 0; i < cells.length; i++) {
+                            if (cells[i].getAttribute("data-rsvp").indexOf("Stuart L") >= 0){
+                                cellIndex = i;
+                                break;
+                            }
+                        }                        
+                    }
                     var element = cells[cellIndex];
                     if (lastIndex >= 0) {
                         unselectElement(cells[lastIndex]);
