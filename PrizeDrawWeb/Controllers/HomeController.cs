@@ -22,7 +22,7 @@ namespace PrizeDrawWeb.Controllers
         }
         public IActionResult Index(string meetupUrl)
         {
-
+            meetupUrl = (meetupUrl ?? "").Trim(); // handle null input, trim any spaces that were accidentally copied :-)
             var match = Regex.Match(meetupUrl, "https://www.meetup.com/(?<group>\\w*)/events/(?<event>\\d*)/?");
             if (match.Success)
             {
@@ -36,7 +36,7 @@ namespace PrizeDrawWeb.Controllers
                 return View();
             }
         }
-        [HttpGet("prize-draws/{groupId}/events/{eventId}", Name ="PrizeDraw")]
+        [HttpGet("prize-draws/{groupId}/events/{eventId}", Name = "PrizeDraw")]
         public async Task<IActionResult> Event([FromServices] MeetupService meetup, string groupId, int eventId)
         {
             var colours = new[]
