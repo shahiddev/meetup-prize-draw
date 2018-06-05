@@ -126,9 +126,22 @@
         <h1>Presenter View :-)</h1>
         <h2>Winners</h2>
         <div id="winners"></div>
+        <h2>Options</h2>
+        <div>
+            <div>Slack webhook Url: <input type="text" id="SlackWebhookUrl" size="80" /></div>
+            <button id="options-save" onclick="saveOptions()">Save</button>
+        </div>
     </div>
 
     <script>
+        function loadOptions(){
+            var slackWebhookUrl = localStorage.getItem("SlackWebhookUrl");
+            document.getElementById("SlackWebhookUrl").value = slackWebhookUrl;
+        }
+        function saveOptions(){
+            var slackWebhookUrl = document.getElementById("SlackWebhookUrl").value;
+            localStorage.setItem("SlackWebhookUrl", slackWebhookUrl);
+        }
         function selectElement(element){
             element.getElementsByTagName("img")[0].classList.remove("hidden");
             element.classList.add("selected");
@@ -158,17 +171,21 @@
             postWinnerToSlack(rsvpInfo);
         }
         function postWinnerToSlack(winnerDetails) {
-            @if(!string.IsNullOrWhiteSpace(Configuration["PrizeDrawWeb_SlackApiUri"]))
-            {<text>
-                var url = "@Configuration["PrizeDrawWeb_SlackApiUri"]";
-                var text = `${new Date()}: ${winnerDetails}`;
-                fetch(url, {
-                    method: "POST",
-                    body: JSON.stringify({ "text": text })
-                })
-</text>
+            var serverWebhookUrl = "@Configuration["PrizeDrawWeb_SlackApiUri"]"
+            var url = document.getElementById("SlackWebhookUrl").value;
+            if (url === ""){
+                url = serverWebhookUrl; // default to server url
             }
+            if (url === ""){
+                return; // no url - bail out
+            }
+            var text = `${new Date()}: ${winnerDetails}`;
+            fetch(url, {
+                method: "POST",
+                body: JSON.stringify({ "text": text })
+            })
         }
+
         var cells = document.getElementsByClassName("cell");
         var lastCell = null;
         function Animate() {
@@ -222,6 +239,7 @@
             }
         }
 
+        loadOptions();
         var running = false;
         document.onkeypress = ev => {
             switch(ev.key){
