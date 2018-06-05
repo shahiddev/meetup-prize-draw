@@ -1,4 +1,6 @@
 ﻿@model PrizeDrawWeb.Models.Home.EventViewModel
+@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
 @{
     ViewData["Title"] = "Event!";
     Layout = null;
@@ -104,10 +106,11 @@
     <div id="container">
         @foreach (var row in Model.Rsvps)
         {
-        <div class="row">
-            @*@foreach (var cell in row) {<div class="cell @cell.Colour"><div class="image"><img style="max-height:100%;max-width:100%;overflow:hidden" src="@cell.ImageUrl" /></div><div class="name">@cell.Display</div></div>}*@
-            @foreach (var cell in row){<div class="cell" style="background-color:@cell.Colour" data-rsvp="@cell.RsvpInfo"><div class="image"><img class="hidden" src="@(@cell.ImageUrl?? "/person.png")" /></div><div class="name">@cell.Display</div></div>}
-        </div>
+            <div class="row">
+                @*@foreach (var cell in row) {<div class="cell @cell.Colour"><div class="image"><img style="max-height:100%;max-width:100%;overflow:hidden" src="@cell.ImageUrl" /></div><div class="name">@cell.Display</div></div>}*@
+                @foreach (var cell in row)
+                {<div class="cell" style="background-color:@cell.Colour" data-rsvp="@cell.RsvpInfo"><div class="image"><img class="hidden" src="@(@cell.ImageUrl?? "/person.png")" /></div><div class="name">@cell.Display</div></div>}
+            </div>
         }
     </div>
 
@@ -129,6 +132,23 @@
                 }
             }
             return result;
+        }
+        function postWinnerToSlack(winnerDetails) {
+            @if(!string.IsNullOrWhiteSpace(Configuration["PrizeDrawWeb_SlackApiUri"]))
+            {
+                <text>
+                var url = "@Configuration["PrizeDrawWeb_SlackApiUri"]";
+                var text = `${new Date()}: ${winnerDetails}`;
+
+                $.ajax({
+                    data: 'payload=' + JSON.stringify({ "text": text }),
+                    dataType: 'json',
+                    processData: false,
+                    type: 'POST',
+                    url: url
+                });
+                </text>
+            }
         }
         var cells = document.getElementsByClassName("cell");
         var lastCell = null;
@@ -168,13 +188,14 @@
                     cells = stripItemFromArray(cells, lastIndex); // remove from list in case of repeated running
                     var rsvpInfo = lastCell.getAttribute("data-rsvp");
                     console.log(`Winner: ${rsvpInfo}`);
+                    postWinnerToSlack(rsvpInfo);
                     running = false;
                 }
             }
             doAnimation();
         }
 
-        var running = false;        
+        var running = false;
         document.onkeypress = ev => {
             if (ev.key === " " && !running){
                 running = true;
@@ -182,6 +203,8 @@
             }
         }
     </script>
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
 </body>
 
 </html>
