@@ -17,6 +17,13 @@
         <p>Winners are logged in the dev tools console</p>
     </div>
     <div class="col-md-12">
+        @{ 
+            var message = TempData["Message"] as string;
+        }
+        @if (!string.IsNullOrEmpty(message))
+        {
+            <div style="font-weight:bold">@message</div>
+        }
         <form asp-action="Index">
             Enter meetup event URL: <input type="text" size="80" autofocus name="meetupUrl" /><input type="submit" value="Go" />
         </form>
