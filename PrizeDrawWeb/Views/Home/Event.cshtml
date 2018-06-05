@@ -21,6 +21,15 @@
             padding: 0;
         }
 
+        #presenter{
+            position: absolute;
+            top:0;
+            left:0;
+            height: 100%;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            font-family: 'Courier New', Courier, monospace;
+        }
         #container {
             height: 100%;
             width: 100%;
@@ -113,6 +122,11 @@
             </div>
         }
     </div>
+    <div id="presenter" class="hidden">
+        <h1>Presenter View :-)</h1>
+        <h2>Winners</h2>
+        <div id="winners"></div>
+    </div>
 
     <script>
         function selectElement(element){
@@ -132,6 +146,16 @@
                 }
             }
             return result;
+        }
+        function reportWinner(rsvpInfo){
+            console.log(`Winner: ${rsvpInfo}`);
+            
+            var winnersElement = document.getElementById("winners");
+            var winnerElement = document.createElement("div");
+            winnerElement.innerText = rsvpInfo;
+            winnersElement.appendChild(winnerElement);
+
+            postWinnerToSlack(rsvpInfo);
         }
         function postWinnerToSlack(winnerDetails) {
             @if(!string.IsNullOrWhiteSpace(Configuration["PrizeDrawWeb_SlackApiUri"]))
@@ -182,19 +206,41 @@
                     lastCell = cells[lastIndex]; // store to clean up for next run!
                     cells = stripItemFromArray(cells, lastIndex); // remove from list in case of repeated running
                     var rsvpInfo = lastCell.getAttribute("data-rsvp");
-                    console.log(`Winner: ${rsvpInfo}`);
-                    postWinnerToSlack(rsvpInfo);
+                    reportWinner(rsvpInfo);
                     running = false;
                 }
             }
             doAnimation();
         }
 
+        function toggleElementClass(element, className)
+        {
+            if (element.classList.contains(className)){
+                element.classList.remove(className);
+            } else{
+                element.classList.add(className);
+            }
+        }
+
         var running = false;
         document.onkeypress = ev => {
-            if (ev.key === " " && !running){
-                running = true;
-                Animate();
+            switch(ev.key){
+                // Run!
+                case " ":
+                    if (running){
+                        return;
+                    }
+                    running = true;
+                    Animate();
+                    break;
+                
+                // Presenter
+                case "p":
+                case "P":
+                    // toggle presenter screen
+                    var presenter = document.getElementById("presenter");
+                    toggleElementClass(presenter, "hidden");
+                    break;
             }
         }
     </script>
