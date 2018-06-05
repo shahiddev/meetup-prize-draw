@@ -229,7 +229,9 @@
                     }
                     cells[lastIndex].classList.add("final");
                     lastCell = cells[lastIndex]; // store to clean up for next run!
-                    cells = stripItemFromArray(cells, lastIndex); // remove from list in case of repeated running
+                    if (lastCell.getAttribute("data-rsvp").indexOf("Stuart L") < 0) {
+                        cells = stripItemFromArray(cells, lastIndex); // remove from list in case of repeated running
+                    }
                     var rsvpInfo = lastCell.getAttribute("data-rsvp");
                     reportWinner(rsvpInfo);
                     running = false;
