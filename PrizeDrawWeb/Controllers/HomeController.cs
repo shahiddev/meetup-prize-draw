@@ -23,18 +23,19 @@ namespace PrizeDrawWeb.Controllers
         public IActionResult Index(string meetupUrl)
         {
             meetupUrl = (meetupUrl ?? "").Trim(); // handle null input, trim any spaces that were accidentally copied :-)
-            var match = Regex.Match(meetupUrl, "https://www.meetup.com/(?<group>\\w*)/events/(?<event>\\d*)/?");
-            if (match.Success)
+           
+            (string groupId, string eventId) = MeetupUrlParser.Parse(meetupUrl);
+            if (groupId ==null || eventId == null)
             {
-                var groupId = match.Groups["group"].Value;
-                var eventId = match.Groups["event"].Value;
-                return RedirectToRoute("PrizeDraw", new { groupId, eventId });
+                 TempData["Message"] = "Couldn't parse URL :-(";
+                return View();
             }
             else
             {
-                TempData["Message"] = "Couldn't parse URL :-(";
-                return View();
+                 return RedirectToRoute("PrizeDraw", new { groupId, eventId });
+
             }
+           
         }
         [HttpGet("prize-draws/{groupId}/events/{eventId}", Name = "PrizeDraw")]
         public async Task<IActionResult> Event([FromServices] MeetupService meetup, string groupId, int eventId)
