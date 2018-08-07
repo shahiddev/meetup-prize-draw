@@ -32,5 +32,16 @@ namespace PrizeDrawWebTests
             group.ShouldBeNullOrEmpty();
             eventId.ShouldBeNullOrEmpty();
         }
+
+                [Fact]
+        public void MeetupUrlParserOnlyAcceptsEventAddresses()
+        {
+            var url = "https://www.meetup.com/dotnetoxford/foo/249057796/";
+
+            (string group, string eventId) = MeetupUrlParser.Parse(url);
+
+            group.ShouldBeNullOrEmpty();
+            eventId.ShouldBeNullOrEmpty();
+        }
     }
 }

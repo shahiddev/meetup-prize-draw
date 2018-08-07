@@ -10,9 +10,10 @@ namespace PrizeDrawWeb.Services.Meetup
         public static (string, string) Parse(string url)
         {
 
-            if (Uri.TryCreate(url, UriKind.Absolute, out var address))
+            if (Uri.TryCreate(url, UriKind.Absolute, out var address) && 
+                address.Authority.EndsWith( "meetup.com", StringComparison.InvariantCultureIgnoreCase))
             {
-                if (address.Authority.EndsWith( "meetup.com", StringComparison.InvariantCultureIgnoreCase))
+                if (string.Equals(address.Segments[2],"events/",StringComparison.InvariantCulture))
                  {
 
                     var group = address.Segments[1].TrimEnd('/');
