@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrizeDrawWeb", "PrizeDrawWeb\PrizeDrawWeb.csproj", "{3D1E8017-1775-46FF-8512-862290513747}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PrizeDrawWeb", "PrizeDrawWeb\PrizeDrawWeb.csproj", "{3D1E8017-1775-46FF-8512-862290513747}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrizeDrawWebTests", "PrizeDrawWebTests\PrizeDrawWebTests.csproj", "{AD198EB3-CBA1-4117-AAFA-66DA7E84C4EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,9 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{3D1E8017-1775-46FF-8512-862290513747}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -30,5 +29,23 @@ Global
 		{3D1E8017-1775-46FF-8512-862290513747}.Release|x64.Build.0 = Release|Any CPU
 		{3D1E8017-1775-46FF-8512-862290513747}.Release|x86.ActiveCfg = Release|Any CPU
 		{3D1E8017-1775-46FF-8512-862290513747}.Release|x86.Build.0 = Release|Any CPU
+		{AD198EB3-CBA1-4117-AAFA-66DA7E84C4EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD198EB3-CBA1-4117-AAFA-66DA7E84C4EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD198EB3-CBA1-4117-AAFA-66DA7E84C4EF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{AD198EB3-CBA1-4117-AAFA-66DA7E84C4EF}.Debug|x64.Build.0 = Debug|Any CPU
+		{AD198EB3-CBA1-4117-AAFA-66DA7E84C4EF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AD198EB3-CBA1-4117-AAFA-66DA7E84C4EF}.Debug|x86.Build.0 = Debug|Any CPU
+		{AD198EB3-CBA1-4117-AAFA-66DA7E84C4EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD198EB3-CBA1-4117-AAFA-66DA7E84C4EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD198EB3-CBA1-4117-AAFA-66DA7E84C4EF}.Release|x64.ActiveCfg = Release|Any CPU
+		{AD198EB3-CBA1-4117-AAFA-66DA7E84C4EF}.Release|x64.Build.0 = Release|Any CPU
+		{AD198EB3-CBA1-4117-AAFA-66DA7E84C4EF}.Release|x86.ActiveCfg = Release|Any CPU
+		{AD198EB3-CBA1-4117-AAFA-66DA7E84C4EF}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {12D1AD84-51A8-4843-A743-25D8EE7FACD5}
 	EndGlobalSection
 EndGlobal

@@ -9,6 +9,7 @@ namespace PrizeDrawWebTests
     {
         [Theory]
         [InlineData("https://www.meetup.com/dotnetoxford/events/249057796/", "dotnetoxford", "249057796")]
+        [InlineData("https://meetup.com/dotnetoxford/events/249057796/", "dotnetoxford", "249057796")]
         [InlineData("https://www.meetup.com/dotnet-oxford/events/249057796/", "dotnet-oxford", "249057796")]
         [InlineData("https://www.meetup.com/Milton-Keynes-NET-Meetup-Group/events/250807726/", "Milton-Keynes-NET-Meetup-Group", "250807726")]
 
@@ -19,6 +20,17 @@ namespace PrizeDrawWebTests
             group.ShouldBe(expectedGroup);
             eventId.ShouldBe(expectedEventId);
 
+        }
+
+        [Fact]
+        public void MeetupUrlParserOnlyAcceptsMeetupDomain()
+        {
+            var url = "https://www.foo.com/Milton-Keynes-NET-Meetup-Group/events/250807726/";
+
+            (string group, string eventId) = MeetupUrlParser.Parse(url);
+
+            group.ShouldBeNullOrEmpty();
+            eventId.ShouldBeNullOrEmpty();
         }
     }
 }

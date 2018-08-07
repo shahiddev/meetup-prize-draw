@@ -7,15 +7,21 @@ namespace PrizeDrawWeb.Services.Meetup
 {
     public static class MeetupUrlParser
     {
-        public static (string, string) Parse (string url)
+        public static (string, string) Parse(string url)
+        {
+
+            if (Uri.TryCreate(url, UriKind.Absolute, out var address))
             {
-             if ( Uri.TryCreate(url,UriKind.Absolute, out var address))
-            {
-                var group= address.Segments[1].TrimEnd('/');
-                var eventId = address.Segments[3].TrimEnd('/');
-                return (group,eventId);
+                if (address.Authority.EndsWith( "meetup.com", StringComparison.InvariantCultureIgnoreCase))
+                 {
+
+                    var group = address.Segments[1].TrimEnd('/');
+                    var eventId = address.Segments[3].TrimEnd('/');
+                    return (group, eventId);
+                }
+
             }
-             return (null,null);
-            }
+            return (null, null);
+        }
     }
 }
