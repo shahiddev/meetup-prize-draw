@@ -15,7 +15,7 @@ namespace PrizeDrawWeb.Services.Meetup
         {
             _httpClientFactory = httpClientFactory;
         }
-        public async Task<Rsvp[]> GetRsvpsAsync(string groupId, int eventId)
+        public async Task<Rsvp[]> GetRsvpsAsync(string groupId, string eventId)
         {
             var client = _httpClientFactory.CreateClient("meetup");
 

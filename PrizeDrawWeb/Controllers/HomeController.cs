@@ -38,7 +38,7 @@ namespace PrizeDrawWeb.Controllers
            
         }
         [HttpGet("prize-draws/{groupId}/events/{eventId}", Name = "PrizeDraw")]
-        public async Task<IActionResult> Event([FromServices] MeetupService meetup, string groupId, int eventId)
+        public async Task<IActionResult> Event([FromServices] MeetupService meetup, string groupId, string eventId)
         {
             var colours = new[]
             {
